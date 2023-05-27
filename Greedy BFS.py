@@ -63,3 +63,41 @@ graph = {
 }
 
 
+def a_star(graph, node, goal):  # function for BFS
+    visited = []  # List for visited nodes.
+    queue = []  # Initialize a queue
+    cost = 0
+    flag = False
+
+    queue.append([0, 0, node])
+
+    while queue:          # Creating loop to visit each node
+        m = queue.pop(0)
+        visited.append(m[2])
+        if m[2] == goal:
+            print(m[2], '\tGoal Acheived !!!')
+            return
+
+        cost = m[1]
+        print(m[2])
+        for neighbour in graph[m[2]]:
+            flag = False
+            if neighbour[2] == 'E':
+                print('\n')
+            if neighbour[2] not in visited:
+                for arr in queue:  # Agar queue me already aik key pari hwi hai to uski cost ko update krne k liye
+                    if arr[2] == neighbour[2]:
+                        # Agar already pari hwi key ki value pehlye hi choti hai ab wali value se to change na karo
+                        if arr[0] > neighbour[0]+cost:
+                            arr[0] = neighbour[0]+cost
+                        flag = True
+
+                if flag != True:
+                    queue.append([neighbour[1]+cost+neighbour[0], neighbour[1]+cost, neighbour[2]])
+
+        queue.sort()
+        
+
+# Driver Code
+print("Following is the Breadth-First Search")
+a_star(graph, 'S', 'G') 
